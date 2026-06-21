@@ -1,0 +1,81 @@
+import { useEffect, useRef, useState, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCallTypeFilter } from '../model/selectors';
+import { setCallTypeFilter } from '../model/slice';
+import type { CallTypeFilterValue } from '../model/types';
+import styles from './call-type-filter.module.scss';
+
+const OPTIONS: Array<{ value: CallTypeFilterValue; label: string }> = [
+  { value: 'all', label: 'Все типы' },
+  { value: 'incoming', label: 'Входящие' },
+  { value: 'outgoing', label: 'Исходящие' },
+  { value: 'missed', label: 'Пропущенные' },
+  { value: 'no_answer', label: 'Недозвон' },
+];
+
+export const CallTypeFilter = memo(() => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectCallTypeFilter);
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  const selectedLabel = OPTIONS.find((o) => o.value === value)?.label ?? OPTIONS[0].label;
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    if (open) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className={styles.root}>
+      <button
+        type="button"
+        className={styles.trigger}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        {selectedLabel}
+        <svg
+          className={`${styles.arrow} ${open ? styles.arrowOpen : ''}`}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            d="M4 6l4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      {open && (
+        <ul role="listbox" className={styles.dropdown}>
+          {OPTIONS.map((opt) => (
+            <li
+              key={opt.value}
+              role="option"
+              aria-selected={opt.value === value}
+              className={`${styles.option} ${opt.value === value ? styles.optionActive : ''}`}
+              onClick={() => {
+                dispatch(setCallTypeFilter(opt.value));
+                setOpen(false);
+              }}
+            >
+              {opt.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}, () => true);

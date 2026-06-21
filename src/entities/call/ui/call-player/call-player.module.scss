@@ -1,0 +1,70 @@
+.player {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.duration {
+  font-size: 15px;
+  color: var(--text);
+  min-width: 34px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ui-icon);
+  padding: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover:not(:disabled) {
+    color: var(--text-active);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.playBtn {
+  background: #fff;
+  color: var(--text-active);
+
+  &:hover:not(:disabled) {
+    background: #fff;
+    color: var(--text-active);
+  }
+}
+
+.progressBar {
+  flex: 1;
+  min-width: 90px;
+  height: 4px;
+  background: var(--ui-icon);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
