@@ -1,5 +1,23 @@
 export type CallType = 'incoming' | 'outgoing' | 'missed' | 'no_answer';
 
+export interface Config {
+  color: string;
+  rotate: number;
+}
+
+export interface CallTypeIconProps {
+  type: CallType;
+  size?: number;
+}
+
+export interface CallPlayerProps {
+  record: string;
+  partnershipId: string;
+  duration: number;
+  onPlayStart: () => void;
+  onPlayStop: () => void;
+}
+
 export interface Call {
   id: string;
   type: CallType;

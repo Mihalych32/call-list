@@ -1,14 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLazyGetRecordQuery } from '../../api/call-api';
+import type { CallPlayerProps } from '../../model/types';
 import styles from './call-player.module.scss';
-
-interface CallPlayerProps {
-  record: string;
-  partnershipId: string;
-  duration: number;
-  onPlayStart: () => void;
-  onPlayStop: () => void;
-}
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);

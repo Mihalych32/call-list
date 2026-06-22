@@ -1,6 +1,8 @@
 .root {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .trigger {
@@ -11,7 +13,7 @@
   background: transparent;
   font-family: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
@@ -34,9 +36,9 @@
   z-index: 10;
   min-width: 160px;
   background: #fff;
-  border: 1px solid #E4E9F0;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(18, 41, 69, 0.12);
+  border: 1px solid #EAF0FA;
+  border-radius: 4px;
+  box-shadow: 0px 0px 26px 0px #E9EDF3CC;
   list-style: none;
   padding: 4px;
   margin: 0;
@@ -44,18 +46,36 @@
 
 .option {
   padding: 8px 12px;
-  border-radius: 6px;
   font-size: 14px;
   color: var(--text);
   cursor: pointer;
   transition: background 0.1s;
 
   &:hover {
-    background: #F1F4F9;
+    background: #DEE4FF;
   }
 }
 
 .optionActive {
-  font-weight: 600;
-  background: #F1F4F9;
+  font-weight: 400;
+  color: var(--text-active);
+}
+
+.triggerActive {
+  color: var(--text-active);
+}
+
+.reset {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
 }

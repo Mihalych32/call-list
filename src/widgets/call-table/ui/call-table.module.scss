@@ -39,7 +39,7 @@
   border-bottom: 1px solid #E4E9F0;
 
   &:nth-child(1) { width: 20px; }
-  &:nth-child(2) { width: 60px; }
+  &:nth-child(2) { width: 20px; }
   &:nth-child(3) { width: 80px; }
   &:nth-child(4) { width: 160px; }
   &:nth-child(5) { width: 140px; }
@@ -75,7 +75,7 @@
 
 .row {
   &:hover {
-    background: #F7F9FC;
+    background: #D4DFF32B;
   }
 }
 

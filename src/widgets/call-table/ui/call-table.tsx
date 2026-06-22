@@ -1,32 +1,17 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-
 
 import { COLUMNS } from '@/widgets/call-table/index';
 import { CallTypeFilter, selectCallTypeFilter, getCallTypeApiParams } from '@/features/call-type-filter';
 import { DateRangeFilter, selectDateRangeFilter, getDateRangeParams } from '@/features/date-range-filter';
 import { selectCurrentPage, selectPageSize } from '@/features/pagination';
-import {
-  useGetCallListQuery,
-  getCallType,
-  formatDuration,
-  formatCallTime,
-  getCallNumber,
-  CallTypeIcon,
-  CallPlayer,
-} from '@/entities/call';
+import { useGetCallListQuery } from '@/entities/call';
 import type { ApiCallItem } from '@/entities/call';
 import { MONTHS_GENITIVE } from '@/shared/dates';
+import type { CallGroup } from '../model/types';
 import { PaginationControls } from './pagination-controls';
+import { CallRow } from './call-row';
 import styles from './call-table.module.scss';
-
-
-interface CallGroup {
-  dateKey: string;
-  label: string | null;
-  count: number;
-  calls: ApiCallItem[];
-}
 
 function groupCallsByDate(calls: ApiCallItem[]): CallGroup[] {
   const todayDate = new Date();
@@ -66,8 +51,6 @@ export const CallTable = () => {
   const dateFilter = useSelector(selectDateRangeFilter);
   const currentPage = useSelector(selectCurrentPage);
   const pageSize = useSelector(selectPageSize);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [playingId, setPlayingId] = useState<number | null>(null);
 
   const { date_start, date_end } = getDateRangeParams(dateFilter);
   const { data, isLoading, isError } = useGetCallListQuery({
@@ -132,47 +115,9 @@ export const CallTable = () => {
                     </td>
                   </tr>
                 )}
-                {group.calls.map((call) => {
-                  const showPlayer =
-                    (hoveredId === call.id || playingId === call.id) && !!call.record;
-
-                  return (
-                    <tr
-                      key={call.id}
-                      className={styles.row}
-                      onMouseEnter={() => setHoveredId(call.id)}
-                      onMouseLeave={() => setHoveredId(null)}
-                    >
-                      <td className={styles.cell}>
-                        <CallTypeIcon type={getCallType(call)} />
-                      </td>
-                      <td className={styles.cell}>{formatCallTime(call.date)}</td>
-                      <td className={styles.cell}>
-                        <img
-                          src={call.person_avatar}
-                          className={styles.avatar}
-                          alt="avatar"
-                        />
-                      </td>
-                      <td className={styles.cell}>{getCallNumber(call)}</td>
-                      <td className={styles.cell}>{call.source || '—'}</td>
-                      <td className={styles.cell}>—</td>
-                      <td className={styles.cell}>
-                        {showPlayer ? (
-                          <CallPlayer
-                            record={call.record}
-                            partnershipId={call.partnership_id}
-                            duration={call.time}
-                            onPlayStart={() => setPlayingId(call.id)}
-                            onPlayStop={() => setPlayingId(null)}
-                          />
-                        ) : (
-                          formatDuration(call.time)
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {group.calls.map((call) => (
+                  <CallRow key={call.id} call={call} />
+                ))}
               </Fragment>
             ))}
           </tbody>

@@ -1,22 +1,6 @@
 import {memo} from 'react';
-import type { CallType } from '../../model/types';
-
-interface Config {
-  color: string;
-  rotate: number;
-}
-
-const CONFIG: Record<CallType, Config> = {
-  incoming:  { color: '#002CFB', rotate: 180 },
-  outgoing:  { color: '#28A879', rotate: 0   },
-  missed:    { color: '#EA1A4F', rotate: 180 },
-  no_answer: { color: '#EA1A4F', rotate: 0   },
-};
-
-interface CallTypeIconProps {
-  type: CallType;
-  size?: number;
-}
+import type { CallTypeIconProps } from '../../model/types';
+import { CONFIG } from '../../model/constants';
 
 export const CallTypeIcon = memo(({ type, size = 16 }: CallTypeIconProps) => {
   const { color, rotate } = CONFIG[type];

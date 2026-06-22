@@ -7,11 +7,8 @@ import {
   setPageSize,
   PAGE_SIZES,
 } from '@/features/pagination';
+import type { PaginationControlsProps } from '../model/types';
 import styles from './call-table.module.scss';
-
-interface PaginationControlsProps {
-  totalRows: number;
-}
 
 function buildPageNumbers(current: number, total: number): (number | 'ellipsis')[] {
   if (total <= 7) {

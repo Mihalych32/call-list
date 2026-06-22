@@ -3,14 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectDateRangeFilter } from '../model/selectors';
 import { setDateRangeFilter } from '../model/slice';
 import type { DatePreset } from '../model/types';
+import { PRESETS } from '../model/constants';
 import styles from './date-range-filter.module.scss';
-
-const PRESETS: Array<{ value: Exclude<DatePreset, 'custom'>; label: string }> = [
-  { value: '3days', label: '3 дня' },
-  { value: 'week', label: 'Неделя' },
-  { value: 'month', label: 'Месяц' },
-  { value: 'year', label: 'Год' },
-];
 
 function formatDate(iso: string): string {
   const [year, month, day] = iso.split('-');
